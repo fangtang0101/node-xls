@@ -1,0 +1,24 @@
+{
+  "name": "node-xls",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "private": true,
+  "scripts": {
+    "start": "node build.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "node-xlsx": "^0.12.0",
+    "xlsx": "^0.12.6"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
