@@ -3,6 +3,7 @@ var fs = require('fs');
 
 // https://www.jianshu.com/p/82b26d188c23
 // https://aotu.io/notes/2016/04/07/node-excel/index.html
+// https://github.com/SheetJS/js-xlsx
 
 
 // base operation  =======  
@@ -39,7 +40,7 @@ function getSheetTargetData(sheet_name) {
     // list_sheet_name.forEach(function(sheet_name) {
     // get sheet 
     var wsheet = wb.Sheets[sheet_name];
-    // console.log('wsheet ...', wsheet);
+    // console.log('wsheet ...', wsheet);cls
     // get data   1.name 2.row and col
     var range_str = wsheet['!ref'];
     var cell_range = analysisCell(range_str);
@@ -56,9 +57,13 @@ function getSheetTargetData(sheet_name) {
         }
     }
     var cell = wsheet['B2'];
-    cell.v = '测试项目';
-    cell.W = '测试项目'
+    // cell.v = '测试项目';
+    // cell.W = '测试项目';
+    // delete cell.w;
     console.log('9999 ....',cell);
+
+    // if(!wsheet.B2.c) wsheet.B2.c = [];
+    // wsheet.B2.c.push({a:"SheetJS", t:"I'm a little comment, short and stout!"});
     // console.log('data_target ...', data_target)
     // });
 }
@@ -147,3 +152,14 @@ function init() {
 
 
 init();
+
+// why not take effect ??
+var wb = xlsx.readFile('./result.xls');
+var listSheetNames = wb.SheetNames;
+var wsheet = wb.Sheets[listSheetNames[0]];
+
+if(!wsheet.A1.c) wsheet.A1.c = [];
+wsheet.A1.c.push({a:"SheetJS", t:"I'm a little comment, short and stout!"});
+console.log('all ... finished ...')
+
+
