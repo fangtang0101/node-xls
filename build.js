@@ -4,6 +4,7 @@ var fs = require('fs');
 // https://www.jianshu.com/p/82b26d188c23
 // https://aotu.io/notes/2016/04/07/node-excel/index.html
 // https://github.com/SheetJS/js-xlsx
+// https://c7sky.com/parse-spreadsheet-with-js-xlsx-in-node-js.html
 
 
 // base operation  =======  
