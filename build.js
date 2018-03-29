@@ -42,6 +42,7 @@ var path_target = './source_or/模版.xls';
 var list_sheet_name = ['37#'];
 var data_target = [];
 var data_original = [];
+var data_finished = [];
 // get  sheet_target all data
 function getSheetTargetData(sheet_name) {
     var wb = xlsx.readFile(path_target);
@@ -66,16 +67,6 @@ function getSheetTargetData(sheet_name) {
             data_target.push(item_tar);
         }
     }
-    var cell = wsheet['B2'];
-    // cell.v = '测试项目';
-    // cell.W = '测试项目';
-    // delete cell.w;
-    console.log('9999 ....', cell);
-
-    // if(!wsheet.B2.c) wsheet.B2.c = [];
-    // wsheet.B2.c.push({a:"SheetJS", t:"I'm a little comment, short and stout!"});
-    // console.log('data_target ...', data_target)
-    // });
 }
 
 // get origin data
@@ -140,15 +131,28 @@ function comparisonData() {
                 target['val1'] = original['val1'];
                 target['val2'] = original['val2'];
                 // warning ... must fill color
+                data_finished.push(target);
                 break;
             }
         }
     }
-    // console.log('comparisonData ...', data_target)
+    // console.log('comparisonData ...', data_finished)
 }
 //write data
-function wirteData() {
-
+function wirteData(sheet_name) {
+    var wb = xlsx.readFile(path_target);
+    var wsheet = wb.Sheets[sheet_name];
+    // write data
+    data_finished.forEach(function(item) {
+        var loc_val1 = xlsx.utils.encode_cell({ r: item.row, c: item.col + 2 });
+        var loc_val2 = xlsx.utils.encode_cell({ r: item.row, c: item.col + 3 });
+        // wsheet[loc_val1].v = 'change the value';
+        if (!wsheet[loc_val1]) wsheet[loc_val1] = {};
+        wsheet[loc_val1].v = 'change the value';
+        // warning if the cell is undefined ,then connot save
+    })
+    xlsx.writeFile(wb, path_target);
+    console.log('write ... finished ...');
 }
 
 // run all
@@ -157,10 +161,21 @@ function init() {
         getSheetTargetData(sheet_name);
         getSheetOriginData(sheet_name);
         comparisonData();
+        wirteData(sheet_name);
     })
 }
 
 
 // init();
 
-// why not take effect ??  
+// why not take effect ??
+
+// var path = './source_or/模版.xls';
+// var path = './result.xls';
+// var opt = { cellStyles: true ,raw:true,cellNF:true,cellDates:true, sheetStubs:true,bookDeps:true,bookFiles:true,bookProps:true,bookSheets:true,bookVBA:true,WTF:true};
+// var wb = xlsx.readFile(path);
+// var listSheetNames = wb.SheetNames;
+// var wsheet = wb.Sheets[listSheetNames[0]];
+// console.log('listSheetNames ...',listSheetNames);
+// wsheet['D1'] = { v: 15, t: 'n', w: '15' };
+// xlsx.writeFile(wb,path);
