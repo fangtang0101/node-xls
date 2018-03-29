@@ -27,6 +27,15 @@ var fs = require('fs');
 // var range_obj = wsheet['!range'];  // the ange object not value
 // console.log('range_obj ...',range_obj);
 
+// change the xls 
+// var path = './result.xls';
+// var wb = xlsx.readFile(path);
+// var listSheetNames = wb.SheetNames;
+// var wsheet = wb.Sheets[listSheetNames[0]];
+// wsheet['A1'].v = 'change the value';
+// xlsx.writeFile(wb,path);
+
+
 // base operation  =======  
 
 var path_target = './source_or/模版.xls';
@@ -61,7 +70,7 @@ function getSheetTargetData(sheet_name) {
     // cell.v = '测试项目';
     // cell.W = '测试项目';
     // delete cell.w;
-    console.log('9999 ....',cell);
+    console.log('9999 ....', cell);
 
     // if(!wsheet.B2.c) wsheet.B2.c = [];
     // wsheet.B2.c.push({a:"SheetJS", t:"I'm a little comment, short and stout!"});
@@ -152,15 +161,6 @@ function init() {
 }
 
 
-init();
+// init();
 
-// why not take effect ??
-var wb = xlsx.readFile('./result.xls');
-var listSheetNames = wb.SheetNames;
-var wsheet = wb.Sheets[listSheetNames[0]];
-
-if(!wsheet.A1.c) wsheet.A1.c = [];
-wsheet.A1.c.push({a:"SheetJS", t:"I'm a little comment, short and stout!"});
-console.log('all ... finished ...')
-
-
+// why not take effect ??  
