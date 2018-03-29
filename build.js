@@ -167,6 +167,7 @@ function init() {
 
 
 // init();
+console.log('build ....')
 
 // why not take effect ??
 
