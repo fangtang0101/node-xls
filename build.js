@@ -6,6 +6,13 @@ var fs = require('fs');
 // https://github.com/SheetJS/js-xlsx
 // https://c7sky.com/parse-spreadsheet-with-js-xlsx-in-node-js.html
 
+// https://www.zybuluo.com/yangfch3/note/249328
+
+
+// https://github.com/SheetJS/js-xlsx/issues/675
+// https://docs.sheetjs.com/#streaming-read
+// https://github.com/SheetJS/js-xlsx#writing-options
+
 
 // base operation  =======  
 
@@ -169,14 +176,61 @@ function init() {
 // init();
 console.log('build ....')
 
+
+
 // why not take effect ??
 
 // var path = './source_or/模版.xls';
-// var path = './result.xls';
-// var opt = { cellStyles: true ,raw:true,cellNF:true,cellDates:true, sheetStubs:true,bookDeps:true,bookFiles:true,bookProps:true,bookSheets:true,bookVBA:true,WTF:true};
-// var wb = xlsx.readFile(path);
-// var listSheetNames = wb.SheetNames;
-// var wsheet = wb.Sheets[listSheetNames[0]];
-// console.log('listSheetNames ...',listSheetNames);
-// wsheet['D1'] = { v: 15, t: 'n', w: '15' };
-// xlsx.writeFile(wb,path);
+var wopts = { bookType: 'xlsx', bookSST: false, type: 'binary' }; // solve style
+var path = './result.xls';
+var opt = { cellStyles: true, raw: true, cellNF: true, cellDates: true, sheetStubs: true, bookDeps: true, bookFiles: true, bookProps: true, bookSheets: true, bookVBA: true, WTF: true };
+var wb = xlsx.readFile(path);
+var listSheetNames = wb.SheetNames;
+var wsheet = wb.Sheets[listSheetNames[0]];
+console.log('listSheetNames ...', listSheetNames);
+wsheet['D1'] = { v: 15, t: 'n', w: '15' };
+
+
+// var ws = xlsx.utils.aoa_to_sheet([ "SheetJS".split("") ]);
+// xlsx.utils.sheet_add_aoa(ws, [[5,6,7], [6,7,8], [7,8,9]], {origin:{r:1, c:4}});
+// xlsx.utils.sheet_add_aoa(ws, [[4,5,6,7,8,9,0]], {origin: -1});
+
+// var new_ws_name = "SheetJS";
+// var ws_data = [
+//   [ "S", "h", "e", "e", "t", "J", "S" ],
+//   [  1 ,  2 ,  3 ,  4 ,  5 ]
+// ];
+// var ws = xlsx.utils.aoa_to_sheet(ws_data);
+// xlsx.utils.book_append_sheet(wb, ws, ws_name,new_ws_name);
+
+var addr = 'D1';
+if (!wsheet[addr]) {
+    wsheet[addr] = { t: 'n', f: 'uuu' };
+    console.log('1111')
+} else {
+    wsheet[addr].f = 'uu';
+    console.log('222');
+    console.log(wsheet[addr]);
+
+}
+
+
+// wb.Sheets[listSheetNames[0]] = wsheet;
+
+
+xlsx.writeFile(wb, path, wopts);
+
+
+
+// function s2ab(s) {
+//   var buf = new ArrayBuffer(s.length);
+//   var view = new Uint8Array(buf);
+//   for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+//   return buf;
+// }
+
+// var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
+// wopts.cellStyles = true;
+// wopts.bookVBA = true;
+// var wbout = xlsx.write(wb,wopts);
+// saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx")
